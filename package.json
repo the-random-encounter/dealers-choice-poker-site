@@ -1,21 +1,31 @@
 {
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.10.2",
-    "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "express": "^4.21.2",
-    "sqlite3": "^5.1.7"
-  },
   "name": "dealers-choice-poker-site",
-  "version": "0.0.1",
-  "description": "Website for Dealer's Choice POker",
-  "main": "index.js",
+  "version": "0.0.0",
   "scripts": {
     "server": "node server.ts",
-    "test": "node "
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
-  "author": "",
-  "license": "ISC"
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.2",
+    "rxjs": "~7.8.0",
+    "sqlite3": "^5.1.7",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/nodemon": "^1.19.6",
+    "nodemon": "^3.1.9",
+    "typescript": "~5.6.2"
+  }
 }

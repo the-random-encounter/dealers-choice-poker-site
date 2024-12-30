@@ -1,25 +1,34 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('./database');
-
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const saltRounds = 10;
 const app = express();
-const port = 3000;
+const port = 3001;
+const User = require('./public/model/User');
+const mongoConnection = 'mongodb://localhost:27017/';
+
+mongoose.connect(mongoConnection);
+
 
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Basic route
+// @ts-ignore
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Login route
+// @ts-ignore
 app.post('/login', (req, res) => {
 	const { username, hashpass } = req.body;
 
-	db.get("SELECT * FROM users WHERE username = ? AND hashpass = ?", [username, hashpass], (err, row) => {
+	// @ts-ignore
+  db.get("SELECT * FROM users WHERE username = ? AND hashpass = ?", [username, hashpass], (err, row) => {
 		if (err) {
 			res.status(500).send('Internal Server Error');
 		} else if (row) {
@@ -31,25 +40,44 @@ app.post('/login', (req, res) => {
 });
 
 // Sign-up route
-app.post('/signup', (req, res) => {
-	const { username, hashpass } = req.body;
+// @ts-ignore
+app.post('/signup', async (req, res) => {
 
-	if (!username || !hashpass) {
-		return res.status(400).json({ error: 'Username and Password are required' });
-	}
+  console.log(JSON.stringify(req.body));
 
-	if (hashpass.length < 6) {
-		return res.status(400).json({ error: 'Password must be at least 6 characters long' });
-	}
+  const dob = req.body.dob;
+  const dobYear = dob.split('-')[0];
+  const dobMonth = dob.split('-')[1];
+  const dobDay = dob.split('-')[2];
+  const hashPassword = await bcrypt.hash(req.body.password, 10);
 
-	db.run("INSERT INTO users (username, hashpass) VALUES (?, ?)", [username, hashpass], function(err) {
-		if (err) {
-			return res.status(500).json({ error: 'Internal Server Error' });
-		} else {
-			res.json({ message: 'Sign-up successful' });
-		}
-	});
+  const newUser = new User({
+    username: req.body.username,
+    password: hashPassword,
+    email: req.body.email,
+    display_name: req.body.displayName || req.body.username,
+    dob_year: dobYear,
+    dob_month: dobMonth,
+    dob_day: dobDay,
+  });
+
+  if (req.body.password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters long' });
+  }
+
+  await newUser.save()
+    .then(() => {
+      console.log(`User saved.`);
+      res.status(200).json({ success: true, message: 'User registered successfully' });
+      app.send('/signup-success');
+    })
+    .catch((err) => console.error(`Error: ${err}`));
 });
+
+app.get('/signup-success', (req, res) => {
+  
+})
+  // @ts-ignore
 
 // Start the server
 app.listen(port, () => {
