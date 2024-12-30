@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sign Up</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<script>
+		function validateForm() {
+			const username = document.forms["signupForm"]["username"].value;
+			const password = document.forms["signupForm"]["password"].value;
+			const errorElement = document.getElementById("error-message");
+			errorElement.innerHTML = "";
+
+			if (username === "" || password === "") {
+				errorElement.innerHTML = "Username and Password must be filled out";
+				return false;
+			}
+			if (password.length < 6) {
+				errorElement.innerHTML = "Password must be at least 6 characters long";
+				return false;
+			}
+			return true;
+		}
+	</script>
+</head>
+<body>
+	<div class="navbar">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Play Poker!</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+	<div class="main-window">
+		<div class="main-content">
+			<h2>Sign Up</h2>
+			<form name="signupForm" action="/signup" method="post" onsubmit="return validateForm()">
+				<input type="text" name="username" placeholder="Username" required>
+				<input type="password" name="password" placeholder="Password" required>
+				<button type="submit">Sign Up</button>
+			</form>
+			<div id="error-message" style="color: red;"></div>
+		</div>
+	</div>
+	<div class="bottom-links">
+		<!-- Bottom links content -->
+	</div>
+</body>
+</html>
