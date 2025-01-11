@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <link rel="stylesheet" href="/css/styles.css">
   <script>
@@ -48,13 +49,13 @@
   <h2>Sign Up</h2>
   <form name="signupForm" action="/signup" method="post" class="signup" onsubmit="return validateForm()">
     <label for="username">Username:</label>
-    <input type="text" name="username" id="username" placeholder="Username" class="signup" required autocomplete="on" autofocus>
+    <input type="text" name="username" id="username" minlength="4" placeholder="Username" class="signup" required autocomplete="on" autofocus>
     <label for="displayName">Display Name:</label>
-    <input type="text" name="displayName" id="displayName" placeholder="Display Name" class="signup" required>
+    <input type="text" name="displayName" id="displayName" minlength="4" placeholder="Display Name" class="signup" required>
     <label for="password">Password:</label>
-    <input type="password" name="password" id="password" placeholder="Password" class="signup" required>
+    <input type="password" name="password" id="password" minlength="8" placeholder="Password" class="signup" required>
     <label for="passconfirm">Confirm Password:</label>
-    <input type="password" name="passconfirm" id="passconfirm" placeholder="Confirm Password" class="signup" required>
+    <input type="password" name="passconfirm" id="passconfirm" minlength="8" placeholder="Confirm Password" class="signup" required>
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" placeholder="Email" class="signup" required autocomplete="on">
     <label for="dob">Date of Birth:</label>

@@ -1,0 +1,43 @@
+export type EmailAddress = '/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+export type CCNumber = '^\d{16}$';
+export type CCMonth = '(0[1-9]|1[0,1,2])';
+export type CVV = '^\d{3}$';
+export type ZIPCode = '^\d{5}$';
+export type Gender = 'male|female';
+export type PhoneNumber = '^\d{10}$';
+export type DOBMonth = '(0[1-9]|1[0,1,2])';
+export type DOBDay = '(0[1-9]|[12][0-9]|3[01])';
+export type DOBYear = '(19|20)\d{2}';
+export type StateAbbv = 'AL'|'AK'|'CA'|'CO'|'CT'|'DE'|'FL'|'GA'|'HI'|'ID'|'IL'|'IN'|'IA'|'KS'|'KY'|'LA'|'ME'|'MD'|'MA'|'MI'|'MN'|'MS'|'MO'|'MT'|'NE'|'NV'|'NH'|'NJ'|'NM'|'NY'|'NC'|'ND'|'OH'|'OK'|'OR'|'PA'|'RI'|'SC'|'SD'|'TN'|'TX'|'UT'|'VT'|'VA'|'WA'|'WV'|'WI'|'WY';
+
+export default interface User {
+  username: string;
+  password: string;
+  email: EmailAddress;
+  display_name?: string;
+  first_name?: string;
+  last_name?: string;
+  dob_year: DOBYear;
+  dob_month: DOBMonth;
+  dob_day: DOBDay;
+  address_street1?: string;
+  address_street2?: string;
+  address_city?: string;
+  address_state?: StateAbbv;
+  address_zip?: ZIPCode;
+  address_country?: string;
+  phone_number?: PhoneNumber;
+  payment_method?: string;
+  stored_cc_number?: CCNumber;
+  stored_cc_name?: string;
+  stored_cc_exp_month?: CCMonth;
+  stored_cc_exp_year?: number;
+  stored_cc_cvv?: CVV;
+  wallet: number;
+  profile_avatar?: string;
+  gender?: Gender;
+  created_at: Date;
+  profile_level: number;
+  profile_exp: number;
+	sessionId?: string;
+}
